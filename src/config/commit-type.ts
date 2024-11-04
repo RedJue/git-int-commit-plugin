@@ -1,21 +1,20 @@
-import { workspace, QuickPickItem } from 'vscode';
+import { QuickPickItem } from 'vscode';
 import { localize } from 'vscode-nls-i18n';
+import { getConfig } from './commit-setting';
 
 /**
  * @description git commit 提交类型
  */
 export interface CommitType extends QuickPickItem {
-    icon?: string;
+    label?: string;
     key?: string;
+    detail?: string;
+    icon?: string;
 }
 //是否展现 Emoji图标 show Emoji or not
-const isShowEmoji = workspace
-    .getConfiguration('GitCommitPlugin')
-    .get<boolean>('ShowEmoji');
+const isShowEmoji = getConfig<boolean>('showEmoji');
 //新增的自定义commit type add custom Commit Type
-const CustomCommitType = workspace
-    .getConfiguration('GitCommitPlugin')
-    .get<boolean>('CustomCommitType');
+const CustomCommitType = getConfig<boolean>('CustomCommitType');
 
 export default function GetCommitTypes() {
     let CommitType: Array<CommitType> = [
@@ -24,6 +23,12 @@ export default function GetCommitTypes() {
             key: 'init',
             detail: localize('extension.commitType.init.detail'),
             icon: '🎉',
+        },
+        {
+            label:'release',
+            key:'release',
+            detail: localize('extension.commitType.release.detail'),
+            icon: '🚀',
         },
         {
             label: 'feat',
@@ -59,7 +64,13 @@ export default function GetCommitTypes() {
             label: 'perf',
             key: 'perf',
             detail: localize('extension.commitType.perf.detail'),
-            icon: '🎈',
+            icon: '⚡',
+        },
+        {
+            label: 'types',
+            key: 'types',
+            detail: localize('extension.commitType.types.detail'),
+            icon: '🏷️',
         },
         {
             label: 'test',

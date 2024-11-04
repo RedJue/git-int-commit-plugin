@@ -112,7 +112,8 @@ export async function activate(context: vscode.ExtensionContext) {
         if (_key === 'subject' && FillSubjectWithCurrent) {
             CommitInputType.value = message_config[_key] || '';
         }
-        vscode.window.showInputBox(CommitInputType).then(value => {
+        // 处理输入长度
+        vscode.window.showInputBox(CommitInputType).then((value: any) => {
             const _value = value || '';
             message_config[_key] = _value;
             _detailType && (_detailType.isEdit = true);
@@ -173,7 +174,7 @@ export async function activate(context: vscode.ExtensionContext) {
         });
         vscode.window
             .showQuickPick(_CommitDetailType, CommitDetailQuickPickOptions)
-            .then(select => {
+            .then((select: any) => {
                 const label = (select && select.label) || '';
                 if (label !== '') {
                     const _key = select?.key || 'body';
@@ -210,7 +211,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
         vscode.window
             .showQuickPick(CommitType, CommitDetailQuickPickOptions)
-            .then(select => {
+            .then((select: any) => {
                 let label = (select && select.label) || '';
                 const icon = (select && select.icon) || '';
                 if (typeof icon === 'string' && icon.length > 0) {
@@ -230,7 +231,7 @@ export async function activate(context: vscode.ExtensionContext) {
         );
         vscode.window
             .showQuickPick(CommitTemplate, CommitDetailQuickPickOptions)
-            .then(select => {
+            .then((select: any) => {
                 const templateName = (select && select.templateName) || '';
                 const templateContent = (select && select.templateContent) || '';
                 message_config.templateName = templateName;
@@ -251,10 +252,10 @@ export async function activate(context: vscode.ExtensionContext) {
     //点击图标触发快捷选项 Click the icon to trigger shortcut options
     let disposable = vscode.commands.registerCommand(
         'extension.showGitCommit',
-        (uri?) => {
+        (uri?: any) => {
             if (uri) {
                 //如果有多个repo 寻找当前的 进行填充 If there are multiple repos looking for the current to populate
-                repo = gitExtension.getAPI(1).repositories.find(repo => {
+                repo = gitExtension.getAPI(1).repositories.find((repo: any) => {
                     const uriRoot = uri._rootUri ? uri._rootUri : uri.rootUri;
                     return repo.rootUri.path === uriRoot?.path;
                 });

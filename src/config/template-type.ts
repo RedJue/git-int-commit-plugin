@@ -1,5 +1,6 @@
-import { workspace, QuickPickItem } from 'vscode';
+import { QuickPickItem } from 'vscode';
 import * as defaultTemp from './default-temp';
+import { getConfig } from './commit-setting';
 
 /**
  * @description git commit template 类型
@@ -13,7 +14,7 @@ export interface CommitTemplateType extends QuickPickItem {
     default?:boolean;
 }
 let CommitTemplate: Array<CommitTemplateType> = new Array<CommitTemplateType>();
-const configTemplate = workspace.getConfiguration('GitCommitPlugin').get<Array<CommitTemplateType>>('Templates');
+const configTemplate = getConfig<Array<CommitTemplateType>>('Templates');
 if (Array.isArray(configTemplate)) {
     CommitTemplate = configTemplate.map((item, index) => {
         return {

@@ -4,7 +4,12 @@ import { localize } from 'vscode-nls-i18n';
 /**
  * @description git commit input 输入提交信息的配置对象
  */
-export interface CommitInputType extends InputBoxOptions {}
+export interface CommitInputType extends InputBoxOptions {
+    placeHolder: string;
+    ignoreFocusOut: boolean;
+    prompt: string;
+    value: string;
+}
 
 export default function GetCommitInputType() {
     const CommitInputType: CommitInputType = {
