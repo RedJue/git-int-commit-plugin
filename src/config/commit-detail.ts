@@ -1,18 +1,21 @@
-import { QuickPickItem, QuickPickOptions, workspace } from 'vscode';
+import { QuickPickItem, QuickPickOptions } from 'vscode';
 import { localize } from 'vscode-nls-i18n';
+import { getConfig } from './commit-setting';
 
 /**
  * @description git commit detail 提交信息的详情
  */
 export interface CommitDetailType extends QuickPickItem {
+    label?: string;
     key?: string | number;
+    description?: string;
+    detail?: string;
     isEdit?: boolean;
 }
 //最大的 subject 限制字数 Max subject characters
-export const MaxSubjectCharacters =
-    workspace.getConfiguration('GitCommitPlugin').get<number>('MaxSubjectCharacters') || 20;
+export const MaxSubjectCharacters = getConfig<number>('MaxSubjectCharacters') || 20;
 
-export const FillSubjectWithCurrent = workspace.getConfiguration('GitCommitPlugin').get<boolean>('FillSubjectWithCurrent') || false;
+export const FillSubjectWithCurrent = getConfig<boolean>('FillSubjectWithCurrent') || false;
 
 export function GetCommitDetailType() {
     const CommitDetailType: Array<CommitDetailType> = [
